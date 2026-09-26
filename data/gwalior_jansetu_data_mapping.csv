@@ -1,0 +1,11 @@
+dataset,domain,janSetu_use,key_fields,source,status
+Ward boundary,Administrative,Gwalior GIS,Required for spatial joins,Gwalior GIS portal,Not yet extracted
+Road network / condition,Roads,Gwalior GIS + OGD Roads,Infrastructure gap,OGD Gwalior roads catalog,Download available from catalog
+Drinking-water system,Water,Gwalior GIS,Water access/gap,Gwalior GIS,Raw vector endpoint not established
+Sewer lines,Sanitation,Gwalior GIS,Sanitation gap,Gwalior GIS,Raw vector endpoint not established
+Community facilities,Facilities,OGD Gwalior,Facility coverage/capacity,OGD Community Facilities,Download available from catalog
+Schools,Education,District Gwalior + GIS/OGD,Education access,District utility directory,Directory CSV included
+Hospitals,Healthcare,District Gwalior + GIS,Health access,District utility directory,Directory CSV included
+Traffic intersections,Mobility,OGD Gwalior,Mobility gap,OGD Traffic,Download available from catalog
+Smart City projects,Investment,Gwalior Smart City,Existing investment/project context,Gwalior Smart City,Project CSV included
+Slum infrastructure baseline,Equity/infrastructure,MoHUA/Gwalior Municipal Corporation report,"Sewer, roads, streetlights, sanitation, facilities",SFCP Gwalior report,Historical; use as baseline

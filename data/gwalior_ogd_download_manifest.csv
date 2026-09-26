@@ -1,0 +1,4 @@
+dataset,domain,geography,description,updated_on,catalog_url,download_options
+Roads information of Gwalior MP,Roads,ward/city,"Determining road condition; keywords include drainage, footpath, length, roads",2025-02-12,https://odisha.data.gov.in/catalog/roads-information-gwalior-mp,ZIP Download + Catalog API
+Community Facilities: Gwalior,Community facilities,ward,Ward-wise community facility name and capacity,2025-02-18,https://odisha.data.gov.in/catalog/community-facilities-gwalior,ZIP Download + Catalog API
+Traffic details: Gwalior,Traffic,city,Operational signalized intersections / traffic indicators,2025-02-18,https://jk.data.gov.in/catalog/traffic-details-gwalior,ZIP Download + Catalog API

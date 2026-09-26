@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+backend/node_modules/
+frontend/node_modules/
+
+# Python Virtual Environments & Cache
+venv/
+backend/ai-service/venv/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Production Build Artifacts
+dist/
+backend/dist/
+frontend/dist/
+build/
+*.tsbuildinfo
+
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+
+# Logs & Scratch
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+backend/test_error.txt
+
+# System & Editor Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Template archive folder
+/jansetu-ai---*
+/jansetu-ai—*
+/jansetu-ai*governance*
+

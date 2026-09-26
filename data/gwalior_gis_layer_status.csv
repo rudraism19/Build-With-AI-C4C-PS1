@@ -1,0 +1,9 @@
+layer,domain,source,extraction_status
+Ward boundaries,Administrative,Gwalior GIS,Target layer; raw vector endpoint not established
+Road network,Roads,Gwalior GIS / OGD Roads,OGD catalog available; GIS raw layer not extracted
+Drinking water,Water,Gwalior GIS,Portal layer confirmed; raw vector endpoint not established
+Sewer lines,Sanitation,Gwalior GIS,Portal layer confirmed; raw vector endpoint not established
+Land use,Land use,Gwalior GIS,Portal layer confirmed; raw vector endpoint not established
+Government assets,Public assets,Gwalior GIS,Portal layer confirmed; raw vector endpoint not established
+Schools,Education,Gwalior GIS / OGD Education,OGD catalog available
+Hospitals,Healthcare,Gwalior GIS / national/municipal sources,GIS layer confirmed; downloadable city layer not yet extracted
