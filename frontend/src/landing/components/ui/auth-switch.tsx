@@ -12,6 +12,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { GoogleAuthModal } from "./GoogleAuthModal";
+import { signInWithGoogleOAuth } from "../../../services/supabase";
 
 export interface AuthSwitchProps {
   portal?: "officer" | "citizen";
@@ -57,11 +58,27 @@ export default function AuthSwitch({
     }
   };
 
+  const [isRedirectingGoogle, setIsRedirectingGoogle] = useState(false);
+
+  const handleLiveGoogleSignIn = async () => {
+    try {
+      setIsRedirectingGoogle(true);
+      setStatusMessage("Connecting to Google via Supabase...");
+      await signInWithGoogleOAuth(activePortal === "officer" ? "POLICYMAKER" : "CITIZEN");
+    } catch (err: any) {
+      console.error("Supabase Google OAuth failure:", err);
+      setIsRedirectingGoogle(false);
+      setStatusMessage(`Google OAuth note: ${err?.message || "Opening account selector"}`);
+      setIsGoogleModalOpen(true);
+    }
+  };
+
   const handleGoogleSignIn = () => {
     setIsGoogleModalOpen(true);
   };
 
   const handleGoogleSuccess = (googleData: { name: string; email: string; role: "CITIZEN" | "POLICYMAKER" }) => {
+
     setIsGoogleModalOpen(false);
     setStatusMessage(`Authenticated with Google as ${googleData.name}`);
     if (onGoogleLogin) {
@@ -719,11 +736,13 @@ export default function AuthSwitch({
                 <span>or</span>
               </div>
 
-              {/* Official Google Sign-In Button */}
+              {/* Official Google Sign-In via Supabase */}
               <button
                 type="button"
-                onClick={handleGoogleSignIn}
+                onClick={handleLiveGoogleSignIn}
+                disabled={isRedirectingGoogle}
                 className="google-btn"
+                title="Sign in with your verified Google Account via Supabase"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -743,9 +762,22 @@ export default function AuthSwitch({
                     fill="#EA4335"
                   />
                 </svg>
-                <span>Sign in with Google</span>
+                <span>{isRedirectingGoogle ? "Connecting to Supabase..." : "Sign in with Google (Supabase)"}</span>
               </button>
+
+              {/* Demo Google accounts selector link */}
+              <div className="flex items-center justify-center gap-1.5 mt-1 text-[10.5px] text-slate-500">
+                <span>or choose from</span>
+                <button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  className="font-semibold text-blue-600 hover:text-blue-800 underline cursor-pointer"
+                >
+                  Demo Google Accounts
+                </button>
+              </div>
             </form>
+
 
             {/* SIGN UP FORM */}
             <form className="auth-form sign-up-form" onSubmit={onSubmit}>
@@ -823,11 +855,13 @@ export default function AuthSwitch({
                 <span>or</span>
               </div>
 
-              {/* Official Google Sign-In Button */}
+              {/* Official Google Sign-In via Supabase */}
               <button
                 type="button"
-                onClick={handleGoogleSignIn}
+                onClick={handleLiveGoogleSignIn}
+                disabled={isRedirectingGoogle}
                 className="google-btn"
+                title="Sign up with your verified Google Account via Supabase"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
                   <path
@@ -847,9 +881,22 @@ export default function AuthSwitch({
                     fill="#EA4335"
                   />
                 </svg>
-                <span>Sign up with Google</span>
+                <span>{isRedirectingGoogle ? "Connecting to Supabase..." : "Sign up with Google (Supabase)"}</span>
               </button>
+
+              {/* Demo Google accounts selector link */}
+              <div className="flex items-center justify-center gap-1.5 mt-1 text-[10.5px] text-slate-500">
+                <span>or choose from</span>
+                <button
+                  type="button"
+                  onClick={handleGoogleSignIn}
+                  className="font-semibold text-blue-600 hover:text-blue-800 underline cursor-pointer"
+                >
+                  Demo Google Accounts
+                </button>
+              </div>
             </form>
+
           </div>
         </div>
 

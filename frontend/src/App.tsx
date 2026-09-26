@@ -37,6 +37,15 @@ export const AppContent: React.FC = () => {
     }
   }, [role]);
 
+  // When returning from Supabase Google OAuth, transition from landing/auth into the dashboard
+  useEffect(() => {
+    if (user && (currentSection === 'landing' || currentSection === 'auth')) {
+      const defaultSection = role === 'POLICYMAKER' ? 'civic-intelligence' : 'citizen-home';
+      setCurrentSection(defaultSection);
+    }
+  }, [user, role, currentSection]);
+
+
   const citizenAllowedSections = ['citizen-home', 'file', 'history', 'map', 'feed'];
   const policymakerAllowedSections = [
     'civic-intelligence',

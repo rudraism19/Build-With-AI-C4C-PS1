@@ -76,4 +76,13 @@ export class AuthController {
   async getMe(@CurrentUser() user: any) {
     return this.authService.getMe(user);
   }
+
+  @Post('sync')
+  @UseGuards(SupabaseAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Synchronize OAuth user profile after Google login' })
+  async syncUser(@CurrentUser() user: any, @Body('role') role?: any) {
+    return this.authService.syncOAuthUser(user, role);
+  }
 }
+

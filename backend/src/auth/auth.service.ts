@@ -155,9 +155,22 @@ export class AuthService {
    * Retrieves profile of authenticated user
    */
   async getMe(authUser: any) {
-    const profile =
+    let profile =
       (await this.usersService.findByAuthUserId(authUser.id)) ||
       authUser.profile;
+
+    if (!profile) {
+      profile = await this.usersService.createProfile({
+        auth_user_id: authUser.id,
+        name:
+          (authUser.user_metadata?.full_name as string) ||
+          (authUser.user_metadata?.name as string) ||
+          authUser.email?.split('@')[0] ||
+          'Citizen',
+        email: authUser.email || '',
+        role: (authUser.user_metadata?.role as UserRole) || UserRole.CITIZEN,
+      });
+    }
 
     return {
       user: {
@@ -169,4 +182,37 @@ export class AuthService {
       profile,
     };
   }
+
+  /**
+   * Synchronizes or ensures user profile for Supabase Google OAuth logins
+   */
+  async syncOAuthUser(authUser: any, desiredRole?: UserRole) {
+    let profile = await this.usersService.findByAuthUserId(authUser.id);
+    if (!profile) {
+      const assignedRole =
+        desiredRole ||
+        (authUser.user_metadata?.role as UserRole) ||
+        UserRole.CITIZEN;
+      const name =
+        (authUser.user_metadata?.full_name as string) ||
+        (authUser.user_metadata?.name as string) ||
+        authUser.email?.split('@')[0] ||
+        'Citizen';
+      profile = await this.usersService.createProfile({
+        auth_user_id: authUser.id,
+        name,
+        email: authUser.email || '',
+        role: assignedRole,
+      });
+    }
+    return {
+      success: true,
+      user: {
+        id: authUser.id,
+        email: authUser.email,
+      },
+      profile,
+    };
+  }
 }
+

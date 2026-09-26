@@ -39,6 +39,20 @@ export const authService = {
     return res.data;
   },
 
+  async syncOAuthUser(token: string, role?: string) {
+    try {
+      const res = await api.post(
+        '/auth/sync',
+        { role },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return res.data;
+    } catch (err) {
+      console.warn('Backend sync OAuth user note:', err);
+      return null;
+    }
+  },
+
   logout() {
     localStorage.removeItem('jansetu_token');
     localStorage.removeItem('jansetu_user');
@@ -49,6 +63,7 @@ export const authService = {
     return saved ? JSON.parse(saved) : null;
   },
 };
+
 
 export const complaintService = {
   // Submit new complaint to NestJS backend
