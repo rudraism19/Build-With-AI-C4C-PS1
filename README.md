@@ -10,6 +10,16 @@
 
 ---
 
+## ⚡ Live Services & Quick Reference
+
+| Service | Port / URL | Description |
+|---|---|---|
+| **Frontend Portal** | `http://localhost:5173` | React 18 + Vite (Landing Page, Citizen & Officer Dashboards) |
+| **API Gateway** | `http://localhost:3000` | NestJS REST API Gateway & Supabase Auth Guards |
+| **AI Microservice** | `http://localhost:8000/docs` | FastAPI Swagger Docs, Gemini 2.0 & Speech Models |
+
+---
+
 ## 🏛️ Platform Architecture & Key Portals
 
 ### 1. 🇮🇳 Citizen Portal
@@ -27,7 +37,8 @@
 ### 3. 🌐 Modern Landing Portal & Role-Based Access
 - **Isolated Cadre Flow**: Landing Page $\rightarrow$ Role Authentication $\rightarrow$ Dedicated Cadre Dashboard.
 - **Cadre Isolation**: Strict role segregation ensuring citizens and policymakers maintain separate, secure access spaces.
-- **Workable Google Sign-In & Demo Cadres**: Instant one-click Google OAuth simulation for Citizen (Ramesh Kumar), District Magistrate Administration, and custom Google accounts.
+- **Supabase Google OAuth & Multi-Cadre Auth**: Production-ready Google OAuth 2.0 integrated via Supabase with automatic token validation, profile self-healing, plus 1-click evaluation profiles for Citizen (Ramesh Kumar) and District Magistrate Office.
+
 
 ---
 
