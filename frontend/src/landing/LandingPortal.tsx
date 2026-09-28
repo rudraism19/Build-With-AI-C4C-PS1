@@ -108,7 +108,7 @@ function JanSetuLandingContent({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAFCFF] text-slate-900 font-sans">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-[#FAFCFF] text-slate-900 font-sans">
       {/* Sticky Navigation */}
       <Navbar
         onOpenModal={() => setIsModalOpen(true)}
@@ -116,8 +116,9 @@ function JanSetuLandingContent({
       />
 
       {/* Main Content Sections */}
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-full overflow-x-hidden min-w-0">
         {/* Hero Section */}
+
         <Hero
           onOpenModal={() => setIsModalOpen(true)}
           onOpenAuth={navigateToAuth}

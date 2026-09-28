@@ -121,7 +121,7 @@ export const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-900 flex font-sans">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#f8fafc] text-slate-900 flex font-sans">
       {/* 1. Left Sidebar with role-tailored navigation */}
       <Sidebar
         currentSection={currentSection}
@@ -135,7 +135,7 @@ export const AppContent: React.FC = () => {
 
       {/* 2. Main Content Layout */}
       <div
-        className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`flex-1 flex flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isSidebarCollapsed ? 'lg:pl-16' : 'lg:pl-72'
         }`}
       >
@@ -152,12 +152,12 @@ export const AppContent: React.FC = () => {
           }}
         />
 
-
         {/* Dynamic Center Stage with Smooth Fade In Transition */}
         <main
           key={currentSection}
-          className="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 animate-fadeIn"
+          className="flex-1 max-w-7xl w-full min-w-0 mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-6 animate-fadeIn"
         >
+
           {/* Simple, User-Friendly Citizen Dashboard */}
           {currentSection === 'citizen-home' && (
             <CitizenDashboard

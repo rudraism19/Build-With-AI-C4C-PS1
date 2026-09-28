@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import AuthSwitch from './ui/auth-switch';
 import { ArrowLeft } from 'lucide-react';
 
@@ -15,31 +15,18 @@ export const AuthPage: React.FC<AuthPageProps> = ({
   onGuestLogin,
   onGoogleLogin,
 }) => {
-  // Remove window scrollbar completely while on authentication page
-  useEffect(() => {
-    const originalOverflow = document.body.style.overflow;
-    const originalHtmlOverflow = document.documentElement.style.overflow;
-    document.body.style.overflow = 'hidden';
-    document.documentElement.style.overflow = 'hidden';
-
-    return () => {
-      document.body.style.overflow = originalOverflow;
-      document.documentElement.style.overflow = originalHtmlOverflow;
-    };
-  }, []);
-
   return (
-    <div className="h-screen max-h-screen w-screen overflow-hidden flex flex-col bg-white text-slate-900 select-none relative font-sans">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden flex flex-col bg-white text-slate-900 select-none relative font-sans">
       {/* Sleek Thin Tricolor Accent Strip */}
       <div className="h-1 w-full bg-gradient-to-r from-[#FF9933] via-white to-[#138808] shrink-0 z-50 shadow-2xs" />
 
-      {/* Ultra-Compact High-Set Top Bar - Shifted all the way up, zero overlap */}
-      <header className="w-full h-10 bg-white/95 border-b border-slate-200/80 backdrop-blur-md px-3 sm:px-6 flex items-center justify-between shrink-0 z-30">
-        {/* Back to Home Button (Slim & Compact) */}
+      {/* Ultra-Compact High-Set Top Bar */}
+      <header className="w-full h-11 bg-white/95 border-b border-slate-200/80 backdrop-blur-md px-3 sm:px-6 flex items-center justify-between shrink-0 z-30 sticky top-0">
+        {/* Back to Home Button */}
         <button
           type="button"
           onClick={onBackToHome}
-          className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 active:bg-slate-200 px-2.5 py-1 rounded-md border border-slate-200 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-2xs"
+          className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200/80 active:bg-slate-200 px-2.5 py-1.5 rounded-md border border-slate-200 transition-colors cursor-pointer focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-2xs"
           aria-label="Back to JanSetu AI landing page"
         >
           <ArrowLeft className="w-3 h-3 text-blue-600" />
@@ -77,13 +64,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({
         <div className="w-20 hidden sm:block" />
       </header>
 
-      {/* Main Full-Screen Area with ample breathing room */}
-      <main className="flex-1 min-h-0 flex flex-col items-center justify-center px-3 sm:px-4 py-1 sm:py-2 overflow-hidden relative">
+      {/* Main Full-Screen Area with comfortable scrolling on small screens and vertical centering on large */}
+      <main className="flex-1 w-full max-w-full flex flex-col items-center justify-center px-3 sm:px-4 py-4 sm:py-6 overflow-y-auto relative">
         {/* Soft Ambient Radial Light Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[300px] bg-blue-100/50 blur-[120px] pointer-events-none rounded-full" />
 
         {/* AuthSwitch Component with Dual Portals and Google Sign-in */}
-        <div className="w-full max-w-[880px] z-10 flex flex-col items-center justify-center">
+        <div className="w-full max-w-[880px] z-10 flex flex-col items-center justify-center my-auto">
           <AuthSwitch
             onLoginSuccess={onLoginSuccess}
             onGuestLogin={onGuestLogin}
@@ -93,7 +80,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({
       </main>
 
       {/* Slim Clean Footer */}
-      <footer className="h-7 shrink-0 bg-white border-t border-slate-100 px-4 flex items-center justify-center text-[10px] text-slate-400 z-30">
+      <footer className="h-8 shrink-0 bg-white border-t border-slate-100 px-4 flex items-center justify-center text-[10px] text-slate-400 z-30">
         <span>JanSetu AI • Digital Public Infrastructure for Citizen Voice &amp; Governance</span>
       </footer>
     </div>

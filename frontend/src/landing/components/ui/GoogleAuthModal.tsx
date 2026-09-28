@@ -96,9 +96,10 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-fadeIn font-sans">
       <div
-        className="w-full max-w-[460px] bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all animate-scaleUp"
+        className="w-full max-w-[460px] max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden transform transition-all animate-scaleUp"
         onClick={(e) => e.stopPropagation()}
       >
+
         {/* Google Header */}
         <div className="p-5 pb-3 border-b border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
@@ -182,7 +183,7 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
           </div>
         ) : (
           /* Main Modal Content */
-          <div className="p-4 space-y-3">
+          <div className="p-4 space-y-3 overflow-y-auto flex-1 min-h-0">
             {liveError && (
               <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
                 {liveError}

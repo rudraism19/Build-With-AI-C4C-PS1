@@ -208,12 +208,13 @@ export default function AuthSwitch({
           box-shadow: 0 2px 8px rgba(13, 148, 136, 0.3);
         }
 
-        /* Compact Sliding Container - 440px Height */
+        /* Sliding Container - 485px Height to prevent any overflow or button cut-off */
         .auth-container {
           position: relative;
           width: 100%;
           max-width: 880px;
-          height: 440px;
+          min-height: 480px;
+          height: 485px;
           background: #ffffff;
           border-radius: 20px;
           box-shadow: 0 16px 40px -10px rgba(15, 23, 42, 0.1), 0 0 0 1px rgba(15, 23, 42, 0.08);
@@ -245,12 +246,14 @@ export default function AuthSwitch({
           align-items: center;
           justify-content: center;
           flex-direction: column;
-          padding: 0 2.8rem;
+          padding: 0.5rem 2.4rem;
           transition: all 0.2s 0.3s;
-          overflow: hidden;
+          overflow: visible;
           grid-column: 1 / 2;
           grid-row: 1 / 2;
+          width: 100%;
         }
+
 
         form.sign-up-form {
           opacity: 0;
@@ -549,20 +552,22 @@ export default function AuthSwitch({
 
         @media (max-width: 870px) {
           .auth-container {
-            height: 490px;
+            min-height: 560px;
+            height: 560px;
             max-width: 440px;
           }
           .signin-signup {
             width: 100%;
-            top: 92%;
+            top: 94%;
             transform: translate(-50%, -100%);
             left: 50%;
           }
           .auth-container.sign-up-mode .signin-signup {
             left: 50%;
-            top: 8%;
+            top: 6%;
             transform: translate(-50%, 0);
           }
+
           .panels-container {
             grid-template-columns: 1fr;
             grid-template-rows: 1fr 2fr 1fr;
