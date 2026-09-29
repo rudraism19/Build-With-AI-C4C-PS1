@@ -1,15 +1,18 @@
 import axios from 'axios';
 import { AIAnalysisResult, Complaint, ComplaintCategory, ComplaintSeverity } from '../types';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api/v1').replace(/\/+$/, '');
+const AI_API_BASE_URL = (import.meta.env.VITE_AI_SERVICE_URL || '/ai-api/api/v1').replace(/\/+$/, '');
+
 const api = axios.create({
-  baseURL: '/api/v1',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
 const aiApi = axios.create({
-  baseURL: '/ai-api/api/v1',
+  baseURL: AI_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -133,7 +136,7 @@ export const aiService = {
     const formData = new FormData();
     formData.append('file', audioBlob, 'grievance_voice.wav');
 
-    const res = await axios.post('/ai-api/api/v1/voice/transcribe', formData, {
+    const res = await aiApi.post('/voice/transcribe', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return res.data;
@@ -160,7 +163,7 @@ export const aiService = {
   // Synthesize Hindi/Indian audio using Sarvam Bulbul model
   async speakText(text: string, languageCode: string = 'hi-IN'): Promise<string | null> {
     try {
-      const res = await axios.post('/ai-api/api/v1/voice/speak', {
+      const res = await aiApi.post('/voice/speak', {
         text,
         language_code: languageCode,
         speaker: 'aditya',

@@ -72,8 +72,8 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(port);
-  logger.log(`JanSetu AI Backend running on: http://localhost:${port}`);
+  await app.listen(port, '0.0.0.0');
+  logger.log(`JanSetu AI Backend running on port ${port} (0.0.0.0)`);
   logger.log(`API Base URL: http://localhost:${port}/api/v1`);
   logger.log(`Swagger Documentation: http://localhost:${port}/api/docs`);
   logger.log(`Health Check: http://localhost:${port}/api/v1/health`);

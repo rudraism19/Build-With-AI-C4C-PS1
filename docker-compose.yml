@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # ----------------------------------------------------------------------------
+  # FastAPI AI Microservice (Gemini 2.0 triage & Sarvam AI Indian Voice)
+  # ----------------------------------------------------------------------------
+  ai-service:
+    build:
+      context: ./backend/ai-service
+      dockerfile: Dockerfile
+    container_name: jansetu-ai-service
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - ENVIRONMENT=production
+      - HOST=0.0.0.0
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-1.5-flash}
+      - SARVAM_API_KEY=${SARVAM_API_KEY:-}
+      - NESTJS_BASE_URL=http://backend:3000
+      - CORS_ORIGINS=http://localhost,http://localhost:80,http://localhost:3000,http://localhost:5173
+      - SUPABASE_URL=${SUPABASE_URL:-}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:-}
+      - INTERNAL_SERVICE_KEY=${INTERNAL_SERVICE_KEY:-jansetu-internal-secret-key}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python -c 'import urllib.request; urllib.request.urlopen(\"http://localhost:8000/\")' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  # ----------------------------------------------------------------------------
+  # NestJS API Gateway (Supabase Auth & PostgreSQL Data Orchestration)
+  # ----------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jansetu-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SUPABASE_URL=${SUPABASE_URL:-https://lrrwhqoeopwiwjthlpdb.supabase.co}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY:-}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:-}
+      - CORS_ORIGIN=http://localhost,http://localhost:80,http://localhost:3000,http://localhost:5173
+      - AI_SERVICE_URL=http://ai-service:8000
+    depends_on:
+      ai-service:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/v1/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # ----------------------------------------------------------------------------
+  # React + Vite Client (Served via Nginx Reverse Proxy)
+  # ----------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_SUPABASE_URL=${VITE_SUPABASE_URL:-https://lrrwhqoeopwiwjthlpdb.supabase.co}
+        - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY:-}
+        - VITE_API_BASE_URL=/api/v1
+        - VITE_AI_SERVICE_URL=/ai-api/api/v1
+    container_name: jansetu-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started
+      ai-service:
+        condition: service_started
+    restart: unless-stopped
+
+networks:
+  default:
+    name: jansetu-network
